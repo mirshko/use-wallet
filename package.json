@@ -12,9 +12,9 @@
   ],
   "scripts": {
     "analyze": "size-limit --why",
-    "build": "dts build",
+    "build": "dts build --format esm",
     "lint": "dts lint",
-    "prepare": "dts build",
+    "prepare": "dts build --format esm",
     "size": "size-limit",
     "start": "dts watch",
     "test": "dts test --passWithNoTests"
@@ -34,25 +34,18 @@
     "testEnvironment": "jsdom"
   },
   "peerDependencies": {
-    "@ethersproject/providers": "^5.6.2",
-    "react": ">=16",
-    "web3modal": "^1.9.6"
+    "react": ">=16"
   },
   "engines": {
     "node": ">=12"
   },
   "size-limit": [
     {
-      "path": "dist/use-wallet.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
       "path": "dist/use-wallet.esm.js",
       "limit": "10 KB"
     }
   ],
   "devDependencies": {
-    "@ethersproject/providers": "^5.6.2",
     "@size-limit/preset-small-lib": "^7.0.8",
     "@tsconfig/create-react-app": "^1.0.2",
     "@tsconfig/recommended": "^1.0.1",
@@ -64,10 +57,11 @@
     "react-dom": "^18.0.0",
     "size-limit": "^7.0.8",
     "tslib": "^2.3.1",
-    "typescript": "^4.6.3",
-    "web3modal": "^1.9.6"
+    "typescript": "^4.6.3"
   },
   "dependencies": {
+    "@ethersproject/providers": "^5.6.2",
+    "web3modal": "^1.9.6",
     "zustand": "^3.7.1"
   }
 }
