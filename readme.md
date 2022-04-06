@@ -1,4 +1,6 @@
-# ✵ useWallet ✵
+# @mirshko/useWallet
+
+[![CI](https://github.com/mirshko/use-wallet/actions/workflows/main.yml/badge.svg)](https://github.com/mirshko/use-wallet/actions/workflows/main.yml)
 
 An easy-to-integrate React hook for connecting and interacting with a Web 3 wallet.
 
