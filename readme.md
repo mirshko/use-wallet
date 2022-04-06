@@ -1,6 +1,6 @@
-# @mirshko/useWallet
+# @mirshko/use-wallet
 
-[![CI](https://github.com/mirshko/use-wallet/actions/workflows/main.yml/badge.svg)](https://github.com/mirshko/use-wallet/actions/workflows/main.yml)
+[![CI](https://github.com/mirshko/use-wallet/actions/workflows/main.yml/badge.svg)](https://github.com/mirshko/use-wallet/actions/workflows/main.yml) ![npm](https://img.shields.io/npm/v/@mirshko/use-wallet) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/@mirshko/use-wallet) ![NPM](https://img.shields.io/npm/l/@mirshko/use-wallet)
 
 An easy-to-integrate React hook for connecting and interacting with a Web3 wallet.
 
