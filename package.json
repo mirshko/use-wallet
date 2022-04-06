@@ -1,6 +1,6 @@
 {
   "name": "@mirshko/use-wallet",
-  "version": "0.0.31",
+  "version": "1.0.0",
   "license": "MIT",
   "author": "Jeff Reiner",
   "main": "dist/index.js",
