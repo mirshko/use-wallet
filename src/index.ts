@@ -1,7 +1,7 @@
-import { useCallback } from 'react';
-import Web3Modal, { ICoreOptions } from 'web3modal';
-import { Network, Web3Provider } from '@ethersproject/providers';
-import create from 'zustand';
+import type { Network, Web3Provider } from "@ethersproject/providers";
+import { useCallback } from "react";
+import type { default as Web3Modal, ICoreOptions } from "web3modal";
+import create from "zustand";
 
 type State = {
   provider: Web3Provider;
@@ -11,18 +11,18 @@ type State = {
 };
 
 const useStore = create<Partial<State>>(_set => ({
-  web3Modal: typeof window !== 'undefined' ? new Web3Modal() : undefined,
+  web3Modal: undefined,
 }));
 
 type Account = string;
 type ConnectWallet = (opts?: Partial<ICoreOptions>) => Promise<State>;
 type DisconnectWallet = () => void;
-type UseWallet = () => Partial<State> & {
+type UseWallet = Partial<State> & {
   connect: ConnectWallet;
   disconnect: DisconnectWallet;
 };
 
-export const useWallet: UseWallet = () => {
+export function useWallet(): UseWallet {
   // Retreive the current values from the store, and automatically re-render on updates
   const account = useStore(state => state.account);
   const network = useStore(state => state.network);
@@ -30,9 +30,17 @@ export const useWallet: UseWallet = () => {
   const web3Modal = useStore(state => state.web3Modal);
 
   const connect: ConnectWallet = useCallback(async opts => {
+    // Dynamically import Web3Modal
+    const Web3Modal = await import("web3modal").then((m) => m.default);
+
     // Launch modal with the given options
     const web3Modal = new Web3Modal(opts);
     const web3ModalProvider = await web3Modal.connect();
+
+    // Dynamically import Web3Provider
+    const Web3Provider = await import("@ethersproject/providers").then(
+      (m) => m.Web3Provider
+    );
 
     // Set up Ethers provider and initial state with the response from the web3Modal
     const initialProvider = new Web3Provider(web3ModalProvider, 'any');
