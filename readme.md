@@ -7,13 +7,12 @@ Uses [Web3Modal](https://github.com/Web3Modal/web3modal) and [Zustand](https://g
 ### Installation
 
 ```
-yarn add @gimmixorg/use-wallet
+yarn add @mirshko/use-wallet
 ```
 
 ```
-npm add @gimmixorg/use-wallet
+npm add @mirshko/use-wallet
 ```
-
 
 ### Example Connect / Disconnect button
 
