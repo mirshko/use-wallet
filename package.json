@@ -6,10 +6,14 @@
   "main": "dist/index.js",
   "module": "dist/use-wallet.esm.js",
   "typings": "dist/index.d.ts",
+  "private": false,
   "files": [
     "dist",
     "src"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "analyze": "size-limit --why",
     "build": "dts build --format esm",
