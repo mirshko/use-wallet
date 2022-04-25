@@ -77,12 +77,21 @@ export function useWallet(): UseWallet {
       useStore.setState({ network });
     });
 
-    web3ModalProvider.on('disconnect', () => {
-      if (__DEV__) {
-        console.log("Event 'disconnect'");
-      }
+    web3ModalProvider.on(
+      'disconnect',
+      (reason: { code: number; message: string }) => {
+        if (__DEV__) {
+          console.log("Event 'disconnect' with payload", reason);
+        }
 
-      web3Modal.clearCachedProvider();
+        web3Modal.clearCachedProvider();
+      }
+    );
+
+    web3ModalProvider.on('connect', (info: { chainId: number }) => {
+      if (__DEV__) {
+        console.log("Event 'connect' with payload", info);
+      }
     });
 
     useStore.setState(nextState);
@@ -107,29 +116,4 @@ export function useWallet(): UseWallet {
     disconnect,
     web3Modal,
   };
-}
-
-export function useEagerConnect() {
-  const web3Modal = useStore((state) => state.web3Modal);
-  const account = useStore((state) => state.account);
-
-  const [tried, setTried] = useState(false);
-
-  useEffect(() => {
-    if (web3Modal?.cachedProvider) {
-      web3Modal.connect().catch(() => {
-        setTried(true);
-      });
-    } else {
-      setTried(true);
-    }
-  }, [web3Modal]);
-
-  useEffect(() => {
-    if (!tried && account) {
-      setTried(true);
-    }
-  }, [tried, account]);
-
-  return tried;
 }
