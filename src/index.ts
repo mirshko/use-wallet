@@ -85,6 +85,11 @@ export function useWallet(): UseWallet {
         }
 
         web3Modal.clearCachedProvider();
+        useStore.setState({
+          provider: undefined,
+          network: undefined,
+          account: undefined,
+        });
       }
     );
 
@@ -100,7 +105,10 @@ export function useWallet(): UseWallet {
   }, []);
 
   const disconnect: DisconnectWallet = useCallback(async () => {
-    web3Modal?.clearCachedProvider();
+    if (web3Modal) {
+      web3Modal.clearCachedProvider();
+    }
+
     useStore.setState({
       provider: undefined,
       network: undefined,
