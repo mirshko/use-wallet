@@ -1,23 +1,26 @@
 import type { Network, Web3Provider } from '@ethersproject/providers';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import type { default as Web3Modal, ICoreOptions } from 'web3modal';
 import create from 'zustand';
 
 type State = {
-  provider: Web3Provider;
-  account: Account;
-  network: Network;
-  web3Modal: Web3Modal;
+  provider: Web3Provider | undefined;
+  account: Account | undefined;
+  network: Network | undefined;
+  web3Modal: Web3Modal | undefined;
 };
 
-const useStore = create<Partial<State>>((_set) => ({
+const useStore = create<State>()((_set) => ({
+  provider: undefined,
+  account: undefined,
+  network: undefined,
   web3Modal: undefined,
 }));
 
 type Account = string;
 type ConnectWallet = (opts?: Partial<ICoreOptions>) => Promise<State>;
 type DisconnectWallet = () => void;
-type UseWallet = Partial<State> & {
+type UseWallet = State & {
   connect: ConnectWallet;
   disconnect: DisconnectWallet;
 };
@@ -57,19 +60,33 @@ export function useWallet(): UseWallet {
 
     // Set up event listeners to handle state changes
     web3ModalProvider.on('accountsChanged', (accounts: string[]) => {
+      if (__DEV__) {
+        console.log("Event 'accountsChanged' with payload,", accounts);
+      }
+
       useStore.setState({ account: accounts[0] });
     });
 
     web3ModalProvider.on('chainChanged', async (_chainId: string) => {
+      if (__DEV__) {
+        console.log("Event 'chainChanged' with payload,", _chainId);
+      }
+
       const network = await getNetwork();
+
       useStore.setState({ network });
     });
 
     web3ModalProvider.on('disconnect', () => {
+      if (__DEV__) {
+        console.log("Event 'disconnect'");
+      }
+
       web3Modal.clearCachedProvider();
     });
 
     useStore.setState(nextState);
+
     return nextState;
   }, []);
 
@@ -90,4 +107,29 @@ export function useWallet(): UseWallet {
     disconnect,
     web3Modal,
   };
+}
+
+export function useEagerConnect() {
+  const web3Modal = useStore((state) => state.web3Modal);
+  const account = useStore((state) => state.account);
+
+  const [tried, setTried] = useState(false);
+
+  useEffect(() => {
+    if (web3Modal?.cachedProvider) {
+      web3Modal.connect().catch(() => {
+        setTried(true);
+      });
+    } else {
+      setTried(true);
+    }
+  }, [web3Modal]);
+
+  useEffect(() => {
+    if (!tried && account) {
+      setTried(true);
+    }
+  }, [tried, account]);
+
+  return tried;
 }
