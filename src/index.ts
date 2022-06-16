@@ -1,5 +1,5 @@
 import type { Network, Web3Provider } from '@ethersproject/providers';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import type { default as Web3Modal, ICoreOptions } from 'web3modal';
 import create from 'zustand';
 
