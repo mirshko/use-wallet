@@ -59,12 +59,14 @@ export function useWallet(): UseWallet {
     };
 
     // Set up event listeners to handle state changes
-    web3ModalProvider.on('accountsChanged', (accounts: string[]) => {
+    web3ModalProvider.on('accountsChanged', async (accounts: string[]) => {
       if (__DEV__) {
         console.log("Event 'accountsChanged' with payload,", accounts);
       }
 
-      useStore.setState({ account: accounts[0] });
+      const initialAccounts = await initialProvider.listAccounts();
+
+      useStore.setState({ account: initialAccounts[0] });
     });
 
     web3ModalProvider.on('chainChanged', async (_chainId: string) => {
