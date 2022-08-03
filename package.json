@@ -1,6 +1,6 @@
 {
   "name": "@mirshko/use-wallet",
-  "version": "1.4.0",
+  "version": "2.0.0",
   "license": "MIT",
   "author": "Jeff Reiner",
   "main": "dist/index.js",
@@ -14,11 +14,9 @@
     "access": "public"
   },
   "scripts": {
-    "analyze": "size-limit --why",
-    "build": "dts build --format esm",
+    "build": "tsc -d",
     "lint": "dts lint",
-    "prepare": "dts build --format esm",
-    "size": "size-limit",
+    "prepare": "dts build",
     "start": "dts watch",
     "test": "dts test --passWithNoTests"
   },
@@ -33,23 +31,14 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "jest": {
-    "testEnvironment": "jsdom"
-  },
   "peerDependencies": {
     "react": ">=16"
   },
   "engines": {
     "node": ">=14"
   },
-  "size-limit": [
-    {
-      "path": "dist/use-wallet.esm.js",
-      "limit": "10 KB"
-    }
-  ],
+  "size-limit": [],
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^7.0.8",
     "@tsconfig/create-react-app": "^1.0.2",
     "@tsconfig/recommended": "^1.0.1",
     "@types/react": "^18.0.14",
@@ -58,12 +47,12 @@
     "husky": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "size-limit": "^7.0.8",
     "tslib": "^2.4.0",
     "typescript": "^4.7.4"
   },
   "dependencies": {
     "@ethersproject/providers": "^5.6.8",
+    "goober": "^2.1.10",
     "web3modal": "^1.9.8",
     "zustand": "^4.0.0"
   }

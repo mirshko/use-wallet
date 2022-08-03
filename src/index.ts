@@ -2,6 +2,8 @@ import type { Network, Web3Provider } from '@ethersproject/providers';
 import { useCallback } from 'react';
 import type { default as Web3Modal, ICoreOptions } from 'web3modal';
 import create from 'zustand';
+export * from './dialog';
+export * from './providers';
 
 type State = {
   provider: Web3Provider | undefined;
