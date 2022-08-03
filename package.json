@@ -6,7 +6,6 @@
   "main": "dist/index.js",
   "module": "dist/use-wallet.esm.js",
   "typings": "dist/index.d.ts",
-  "private": false,
   "files": [
     "dist",
     "src"
@@ -41,7 +40,7 @@
     "react": ">=16"
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=14"
   },
   "size-limit": [
     {
